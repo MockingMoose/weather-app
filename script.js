@@ -12,7 +12,6 @@ async function getWeatherData() {
         `https://api.openweathermap.org/geo/1.0/zip?zip=${zip},US&appid=${apiKey}`
     );
     let geoData = await geoRes.json();
-    console.log(geoData)
     let { lat, lon } = geoData;
     
     let weatherRes = await fetch(
@@ -20,4 +19,10 @@ async function getWeatherData() {
     );
     let weatherData = await weatherRes.json();
     console.log(weatherData);
+    cityBox.innerHTML = weatherData.name;
+    weatherInfo.innerHTML = weatherData.main.temp;
+    weatherInfo.innerHTML += " and ";
+    weatherInfo.innerHTML += weatherData.weather[0].description;
+
+    
 };
