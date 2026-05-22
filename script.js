@@ -5,9 +5,9 @@ let cityBox = document.getElementById("city")
 let weatherInfo = document.getElementById("weatherInfo")
 let status = document.getElementById("survivalStatus")
 
-submitBtn.addEventListener("click", GetWeatherData);
+submitBtn.addEventListener("click", getWeatherData);
 
-async function GetWeatherData() {
+async function getWeatherData() {
     let zip = document.getElementById("inputZIP").value;
     //takes zip code to find lat and lon
     let geoRes = await fetch(
@@ -20,7 +20,6 @@ async function GetWeatherData() {
         `https://api.openweathermap.org/data/2.5/weather?lat=${lat}&lon=${lon}&units=imperial&appid=${apiKey}`
     );
     let weatherData = await weatherRes.json();
-    console.log(weatherData);
     cityBox.innerHTML = weatherData.name;
     weatherInfo.innerHTML = weatherData.main.temp;
     weatherInfo.innerHTML += " and ";
@@ -29,6 +28,10 @@ async function GetWeatherData() {
     let temperature = weatherData.main.temp;
     let description = weatherData.weather[0].description;
     let windSpeed = weatherData.wind.speed;
+    
+    getSurvivalMessage(temperature, windSpeed);
+};
+async function getSurvivalMessage(temperature, windSpeed){
     let message;
 
     //Checks temperature to choose correct message.
